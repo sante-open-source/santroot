@@ -91,9 +91,8 @@ popd
 cd ..
 rm -rf diffutils*
 # 6. file
-git clone https://github.com/file/file
+wget -q -O- https://astron.com/pub/file/file-5.44.tar.gz | tar -xzf-
 cd file*
-autoreconf -fi
 mkdir build
 pushd build
   ../configure --disable-bzlib \
@@ -108,4 +107,6 @@ popd
 	    --silent
 make --silent FILE_COMPILE=$(pwd)/build/src/file
 make --silent DESTDIR=/opt/santroot install
+cd ..
+rm -rf file*
 ls /opt/santroot
