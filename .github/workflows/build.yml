@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@main
       - name: Install dependencies
         run: |
-          apt -qqy update
-          apt -qqy install wget bzip2 automake autoconf autopoint
+          apt-get -qqy update
+          apt-get -qqy install wget bzip2 automake autoconf autopoint git build-essential
       - name: Build
         run: ./build.sh
