@@ -52,7 +52,8 @@ mkdir build
 pushd build
   ../configure --prefix=/usr \
 	       --host=x86_64-buildroot-linux-gnu \
-	       --build=$(../config.guess)
+	       --build=$(../config.guess) \
+	       --silent
   make --silent
   make --silent DESTDIR=/opt/santroot install
 popd

@@ -11,8 +11,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@main
       - name: Install dependencies
-        run: |
+        run: >-
           apt-get -qqy update
-          apt-get -qqy install wget bzip2 automake autoconf autopoint git build-essential texinfo help2man rsync
+
+          apt-get -qqy install wget bzip2 automake autoconf autopoint git
+          build-essential texinfo help2man rsync libncurses-dev
       - name: Build
         run: ./build.sh
