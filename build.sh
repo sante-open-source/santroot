@@ -30,7 +30,7 @@ pushd build-tic
 popd
 ./configure --prefix=/usr \
 	    --host=x86_64-buildroot-linux-gnu \
-	    --build=$(../config.guess) \
+	    --build=$(./config.guess) \
 	    --mandir=/usr/share/man \
 	    --with-manpage-format=normal \
 	    --with-shared \
@@ -46,10 +46,48 @@ make --silent DESTDIR=/opt/santroot TIC_PATH=$(pwd)/build-tic/progs/tic install
 echo "INPUT(-lncursesw)" > /opt/santroot/usr/lib/libncurses.so
 rm -rf ncurses*
 # 3. libedit
-wget -q -O- https://thrysoee.dk/editline/libedit-20221030-3.1.tar.gz | tar -xzf-
-cd libedit-20221030-3.1
+git clone https://salsa.debian.org/debian/libedit.git
+cd libedit
 mkdir build
 pushd build
-  
+  ../configure --prefix=/usr \
+	       --host=x86_64-buildroot-linux-gnu \
+	       --build=$(../config.guess)
+  make --silent
+  make --silent DESTDIR=/opt/santroot install
 popd
+cd ..
+rm -rf libedit*
+# 4. dash
+git clone https://salsa.debian.org/debian/dash.git
+cd dash
+mkdir build
+pushd build
+  ../configure --prefix=/usr \
+               --bindir=/usr/bin \
+               --mandir=/usr/share/man \
+	       --host=x86_64-buildroot-linux-gnu \
+	       --silent
+  make --silent
+  make --silent DESTDIR=/opt/santroot install
+popd
+cd ..
+rm -rf dash*
+# 5. coreutils
+git clone git://git.savannah.gnu.org/coreutils.git
+cd coreutils
+./bootstrap
+mkdir build
+pushd build
+  ../configure --prefix=/usr \
+	       --libexecdir=/usr/lib \
+	       --host=$LFS_TGT \
+	       --build=$(../build-aux/config.guess)
+  make --silent
+  make --silent DESTDIR=/opt/santroot install
+popd
+cd ..
+rm -rf coreutils*
+# 6. diffutils
+
 ls /opt/santroot
