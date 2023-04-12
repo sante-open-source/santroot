@@ -111,4 +111,32 @@ make --silent FILE_COMPILE=$(pwd)/build/src/file
 make --silent DESTDIR=/opt/santroot install
 cd ..
 rm -rf file*
+# 7. findutils
+wget -q -O- https://ftp.gnu.org/gnu/findutils/findutils-4.9.0.tar.xz | tar -xJf-
+cd findutils*
+mkdir build
+pushd build
+  ../configure --prefix=/usr \
+	       --localstatedir=/var/lib/locate \
+	       --host=x86_64-buildroot-linux-gnu \
+	       --build=$(build-aux/config.guess) \
+	       --silent
+  make --silent
+  make --silent DESTDIR=/opt/santroot install
+popd
+cd ..
+rm -rf findutils*
+# 8. Mawk
+git clone https://github.com/ThomasDickey/mawk-snapshots mawk
+cd mawk*
+mkdir build
+pushd build
+  ../configure --host=x86_64-buildroot-linux-gnu \
+	       --build=$(./config.guess) \
+	       --silent
+  make --silent
+  make --silent BINDIR=/opt/santroot/usr/bin MANDIR=/opt/santroot/usr/share/man/man1 install
+popd
+cd ..
+rm -rf mawk*
 ls /opt/santroot
