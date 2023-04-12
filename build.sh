@@ -144,8 +144,8 @@ rm -rf mawk*
 # 9. gawk
 wget -q -O- https://ftp.gnu.org/gnu/gawk/gawk-5.2.1.tar.xz | tar -xJf-
 cd gawk*
-ls
-mkdir build                                                                             pushd build
+mkdir build
+pushd build
   ../configure --prefix=/usr \
                --host=x86_64-buildroot-linux-gnu \
                --build=$(../build-aux/config.guess) \
@@ -155,4 +155,19 @@ mkdir build                                                                     
 popd
 cd ..
 rm -rf gawk*
+# 10. grep
+git clone https://salsa.debian.org/debian/grep
+cd grep*
+mkdir build
+pushd build
+  ../configure --prefix=/usr \
+               --host=x86_64-buildroot-linux-gnu \
+	       --build=$(../build-aux/config.guess) \
+	       --silent
+  make --silent
+  make --silent DESTDIR=/opt/santroot install
+popd
+cd ..
+rm -rf grep*
 ls /opt/santroot
+chroot /opt/santroot
