@@ -46,19 +46,19 @@ make --silent DESTDIR=/opt/santroot TIC_PATH=$(pwd)/build-tic/progs/tic install
 echo "INPUT(-lncursesw)" > /opt/santroot/usr/lib/libncurses.so
 rm -rf ncurses*
 # 3. libedit
-git clone https://salsa.debian.org/debian/libedit.git
-cd libedit
-mkdir build
-pushd build
-  ../configure --prefix=/usr \
-	       --host=x86_64-buildroot-linux-gnu \
-	       --build=$(../config.guess) \
-	       --silent
-  make --silent
-  make --silent DESTDIR=/opt/santroot install
-popd
-cd ..
-rm -rf libedit*
+#git clone https://salsa.debian.org/debian/libedit.git
+#cd libedit
+#mkdir build
+#pushd build
+#  ../configure --prefix=/usr \
+#	       --host=x86_64-buildroot-linux-gnu \
+#	       --build=$(../config.guess) \
+#	       --silent
+#  make --silent
+#  make --silent DESTDIR=/opt/santroot install
+#popd
+#cd ..
+#rm -rf libedit*
 # 4. dash
 git clone https://salsa.debian.org/debian/dash.git
 cd dash
