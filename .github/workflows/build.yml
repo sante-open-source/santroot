@@ -13,6 +13,6 @@ jobs:
       - name: Install dependencies
         run: |
           apt-get -qqy update
-          apt-get -qqy install wget bzip2 automake autoconf autopoint git build-essential
+          apt-get -qqy install wget bzip2 automake autoconf autopoint git build-essential texinfo help2man
       - name: Build
         run: ./build.sh
