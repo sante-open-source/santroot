@@ -44,22 +44,9 @@ popd
 make --silent
 make --silent DESTDIR=/opt/santroot TIC_PATH=$(pwd)/build-tic/progs/tic install
 echo "INPUT(-lncursesw)" > /opt/santroot/usr/lib/libncurses.so
+cd ..
 rm -rf ncurses*
-# 3. libedit
-#git clone https://salsa.debian.org/debian/libedit.git
-#cd libedit
-#mkdir build
-#pushd build
-#  ../configure --prefix=/usr \
-#	       --host=x86_64-buildroot-linux-gnu \
-#	       --build=$(../config.guess) \
-#	       --silent
-#  make --silent
-#  make --silent DESTDIR=/opt/santroot install
-#popd
-#cd ..
-#rm -rf libedit*
-# 4. dash
+# 3. dash
 git clone https://salsa.debian.org/debian/dash.git
 cd dash
 mkdir build
@@ -74,16 +61,16 @@ pushd build
 popd
 cd ..
 rm -rf dash*
-# 5. coreutils
-git clone git://git.savannah.gnu.org/coreutils.git
-cd coreutils
-./bootstrap
+# 4. coreutils
+wget -q -O- https://ftp.gnu.org/gnu/coreutils/coreutils-9.2.tar.xz | tar -xJf-
+cd coreutils-9.2
 mkdir build
 pushd build
   ../configure --prefix=/usr \
 	       --libexecdir=/usr/lib \
 	       --host=$LFS_TGT \
-	       --build=$(../build-aux/config.guess)
+	       --build=$(../build-aux/config.guess) \
+	       FORCE_UNSAFE_CONFIGURE=1
   make --silent
   make --silent DESTDIR=/opt/santroot install
 popd
