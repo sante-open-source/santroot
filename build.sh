@@ -142,7 +142,7 @@ popd
 cd ..
 rm -rf mawk*
 # 9. mawk2
-wget -q -O- https://github.com/mikebrennan000/mawk-2/raw/master/mawk-1.9.9.6.tar.gz | tar -xJf-
+wget -q -O- https://github.com/mikebrennan000/mawk-2/raw/master/mawk-1.9.9.6.tar.gz | tar -xzf-
 cd mawk*
 mkdir build
 pushd build
