@@ -119,7 +119,7 @@ pushd build
   ../configure --prefix=/usr \
 	       --localstatedir=/var/lib/locate \
 	       --host=x86_64-buildroot-linux-gnu \
-	       --build=$(build-aux/config.guess) \
+	       --build=$(../build-aux/config.guess) \
 	       --silent
   make --silent
   make --silent DESTDIR=/opt/santroot install
@@ -131,11 +131,12 @@ git clone https://github.com/ThomasDickey/mawk-snapshots mawk
 cd mawk*
 mkdir build
 pushd build
-  ../configure --host=x86_64-buildroot-linux-gnu \
-	       --build=$(./config.guess) \
+  ../configure --prefix=/usr
+               --host=x86_64-buildroot-linux-gnu \
+	       --build=$(../config.guess) \
 	       --silent
   make --silent
-  make --silent BINDIR=/opt/santroot/usr/bin MANDIR=/opt/santroot/usr/share/man/man1 install
+  make --silent DESTDIR=/opt/santroot install
 popd
 cd ..
 rm -rf mawk*
