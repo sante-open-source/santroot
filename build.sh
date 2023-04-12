@@ -126,9 +126,10 @@ pushd build
 popd
 cd ..
 rm -rf findutils*
-# 8. Mawk
+# 8. mawk
 git clone https://github.com/ThomasDickey/mawk-snapshots mawk
 cd mawk*
+sed -ie 's|log()|log(1.0)|g' configure
 mkdir build
 pushd build
   ../configure --prefix=/usr \
@@ -140,4 +141,32 @@ pushd build
 popd
 cd ..
 rm -rf mawk*
+# 9. mawk2
+wget -q -O- https://github.com/mikebrennan000/mawk-2/raw/master/mawk-1.9.9.6.tar.gz | tar -xJf-
+cd mawk*
+mkdir build
+pushd build
+  ../configure --prefix=/usr \
+               --host=x86_64-buildroot-linux-gnu \
+	       --build=$(../config.guess) \
+	       --silent
+  make --silent
+  cp mawk2 /opt/santroot/usr/bin
+  cp man/mawk.1 /usr/share/man/man1/mawk2.1
+popd
+cd ..
+rm -rf mawk*
+# 10. gawk
+wget -q -O- https://ftp.gnu.org/gnu/gawk/gawk-5.2.1.tar.xz | tar -xJf-
+cd gawk*
+mkdir build                                                                             pushd build
+  ../configure --prefix=/usr \
+               --host=x86_64-buildroot-linux-gnu \
+               --build=$(../build-aux/config.guess) \
+               --silent
+  make --silent
+  make --silent DESTDIR=/opt/santroot install
+popd
+cd ..
+rm -rf gawk*
 ls /opt/santroot
