@@ -1,0 +1,14 @@
+name: Build
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: debian:latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@main
+      - name: Build
+        run: ./build,sh
