@@ -1,14 +1,57 @@
 #!/bin/bash -e
 wget -q -O- https://toolchains.bootlin.com/downloads/releases/toolchains/x86-64/tarballs/x86-64--glibc--bleeding-edge-2022.08-1.tar.bz2 | tar -xjf- -C /opt
+# Santroot build
+# Export paths
 export PATH="$PATH:/opt/x86-64--glibc--bleeding-edge-2022.08-1/bin"
+# Build a santroot
+# 1. m4
 wget -q -O- https://ftp.gnu.org/gnu/m4/m4-1.4.19.tar.xz | tar -xJf-
 cd m4-1.4.19
 mkdir build
 pushd build
   ../configure --prefix=/usr \
 	       --host=x86_64-buildroot-linux-gnu \
-	       --build=$(../build-aux/config.guess)
-  make
-  make DESTDIR=/opt/santroot
+	       --build=$(../build-aux/config.guess) \
+	       --silent
+  make --silent
+  make --silent DESTDIR=/opt/santroot install
 popd
 cd ..
+rm -rf m4*
+# 2. ncurses
+git clone https://github.com/ThomasDickey/ncurses-snapshots ncurses
+cd ncurses
+sed -i s/mawk// configure
+mkdir build-tic
+pushd build-tic
+  ../configure
+  make --silent -C include
+  make --silent -C progs tic
+popd
+mkdir build-ncurses
+pushd build-ncurses
+  ../configure --prefix=/usr \
+	       --host=x86_64-buildroot-linux-gnu \
+	       --build=$(../config.guess) \
+	       --mandir=/usr/share/man \
+	       --with-manpage-format=normal \
+	       --with-shared \
+	       --without-normal \
+	       --with-cxx-shared \
+	       --without-debug \
+	       --without-ada \
+	       --disable-stripping \
+	       --enable-widec
+  make --silent
+  make --silent DESTDIR=/opt/santroot TIC_PATH=../build-tic/progs/tic install
+  echo "INPUT(-lncursesw)" > /opt/santroot/usr/lib/libncurses.so
+popd
+rm -rf ncurses*
+# 3. libedit
+wget -q -O- https://thrysoee.dk/editline/libedit-20221030-3.1.tar.gz | tar -xzf-
+cd libedit-20221030-3.1
+mkdir build
+pushd build
+  
+popd
+ls /opt/santroot
