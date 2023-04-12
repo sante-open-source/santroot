@@ -24,28 +24,26 @@ cd ncurses
 sed -i s/mawk// configure
 mkdir build-tic
 pushd build-tic
-  ../configure
+  ../configure --silent
   make --silent -C include
   make --silent -C progs tic
 popd
-mkdir build-ncurses
-pushd build-ncurses
-  ../configure --prefix=/usr \
-	       --host=x86_64-buildroot-linux-gnu \
-	       --build=$(../config.guess) \
-	       --mandir=/usr/share/man \
-	       --with-manpage-format=normal \
-	       --with-shared \
-	       --without-normal \
-	       --with-cxx-shared \
-	       --without-debug \
-	       --without-ada \
-	       --disable-stripping \
-	       --enable-widec
-  make --silent
-  make --silent DESTDIR=/opt/santroot TIC_PATH=../build-tic/progs/tic install
-  echo "INPUT(-lncursesw)" > /opt/santroot/usr/lib/libncurses.so
-popd
+./configure --prefix=/usr \
+	    --host=x86_64-buildroot-linux-gnu \
+	    --build=$(../config.guess) \
+	    --mandir=/usr/share/man \
+	    --with-manpage-format=normal \
+	    --with-shared \
+	    --without-normal \
+	    --with-cxx-shared \
+	    --without-debug \
+	    --without-ada \
+	    --disable-stripping \
+	    --enable-widec \
+	    --silent
+make --silent
+make --silent DESTDIR=/opt/santroot TIC_PATH=$(pwd)/build-tic/progs/tic install
+echo "INPUT(-lncursesw)" > /opt/santroot/usr/lib/libncurses.so
 rm -rf ncurses*
 # 3. libedit
 wget -q -O- https://thrysoee.dk/editline/libedit-20221030-3.1.tar.gz | tar -xzf-
