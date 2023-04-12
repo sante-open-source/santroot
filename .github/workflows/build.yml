@@ -10,5 +10,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@main
+      - name: Install dependencies
+        run: |
+          apt update
+          apt install wget bzip2
       - name: Build
         run: ./build.sh
