@@ -91,8 +91,9 @@ popd
 cd ..
 rm -rf diffutils*
 # 6. file
-wget -q -O- https://astron.com/pub/file/file-5.44.tar.gz | tar -xzf-
+git clone https://github.com/file/file
 cd file*
+autoreconf -fi
 mkdir build
 pushd build
   ../configure --disable-bzlib \
@@ -100,9 +101,10 @@ pushd build
                --disable-xzlib \
                --disable-zlib \
 	       --silent
+  make
 popd
 ./configure --prefix=/usr \
-	    --host=$LFS_TGT \
+	    --host=x86_64-buildroot-linux-gnu \
 	    --build=$(./config.guess) \
 	    --silent
 make --silent FILE_COMPILE=$(pwd)/build/src/file
