@@ -131,7 +131,7 @@ git clone https://github.com/ThomasDickey/mawk-snapshots mawk
 cd mawk*
 mkdir build
 pushd build
-  ../configure --prefix=/usr
+  ../configure --prefix=/usr \
                --host=x86_64-buildroot-linux-gnu \
 	       --build=$(../config.guess) \
 	       --silent
