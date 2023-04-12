@@ -11,4 +11,4 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@main
       - name: Build
-        run: ./build,sh
+        run: ./build.sh
