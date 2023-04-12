@@ -144,6 +144,7 @@ rm -rf mawk*
 # 9. gawk
 wget -q -O- https://ftp.gnu.org/gnu/gawk/gawk-5.2.1.tar.xz | tar -xJf-
 cd gawk*
+ls
 mkdir build                                                                             pushd build
   ../configure --prefix=/usr \
                --host=x86_64-buildroot-linux-gnu \
