@@ -16,6 +16,7 @@ jobs:
 
           apt-get -qqy install wget bzip2 automake autoconf autopoint git
           build-essential texinfo help2man gettext gperf libtool intltool
+          flex bison
       - name: Build
         run: |
           ./build/toolchain.sh
