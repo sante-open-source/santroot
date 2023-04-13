@@ -238,13 +238,20 @@ pushd build
 popd
 cd ..
 rm -rf tar*
-ls /opt/santroot
-pushd /opt/santroot
-  ln -s usr/bin bin
-  ln -s usr/bin sbin
-  ln -s usr/lib lib
-  ln -s usr/lib lib64
-  ln -s usr/lib libexec
-  ln -s bin usr/sbin
+# 16. xz
+git clone https://git.tukaani.org/xz.git
+cd xz*
+autoreconf -fi
+mkdir build
+pushd build
+  ../configure --prefix=/usr \
+               --host=x86_64-buildroot-linux-gnu \
+               --build=$(../build-aux/config.guess) \
+               --docdir=/usr/share/doc/xz
+  make --silent
+  make --silent DESTDIR=/opt/santroot install
 popd
-chroot /opt/santroot
+cd ..
+rm -rf xz*
+ls /opt/santroot
+chroot /opt/santroot /usr/bin/dash
