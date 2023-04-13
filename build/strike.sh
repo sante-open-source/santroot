@@ -27,7 +27,7 @@ pushd build
 	       --target=x86_64-buildroot-linux-gnu \
 	       LDFLAGS_FOR_TARGET=-L$PWD/x86_64-buildroot-linux-gnu/libgcc \
 	       --prefix=/usr \
-	       --with-build-sysroot=/opt/x86-64--glibc--bleeding-edge-2022.08-1/x86_64-buildroot-linux-gnu \
+	       --with-build-sysroot=/opt/x86-64--glibc--bleeding-edge-2022.08-1/x86_64-buildroot-linux-gnu/sysroot \
 	       --enable-default-pie \
 	       --enable-default-ssp \
 	       --disable-multilib \
