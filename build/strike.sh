@@ -1,8 +1,8 @@
 #!/bin/bash -e
 export PATH="$PATH:/opt/x86-64--glibc--bleeding-edge-2022.08-1/bin"
 
-git clone https://sourceware.org/git/binutils-gdb.git
-cd binutils-gdb*
+wget -q -O- https://ftp.gnu.org/gnu/binutils/binutils-2.40.tar.xz | tar -xJf-
+cd binutils*
 mkdir build
 pushd build
   ../configure --prefix=/usr \
@@ -15,4 +15,4 @@ pushd build
   make --silent DESTDIR=/opt/santroot install
 popd
 cd ..
-rm -rf binutils-gdb*
+rm -rf binutils*
