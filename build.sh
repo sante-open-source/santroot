@@ -162,12 +162,61 @@ mkdir build
 pushd build
   ../configure --prefix=/usr \
                --host=x86_64-buildroot-linux-gnu \
-	       --build=$(../build-aux/config.guess) \
 	       --silent
   make --silent
   make --silent DESTDIR=/opt/santroot install
 popd
 cd ..
 rm -rf grep*
+# 11. gzip
+git clone https://salsa.debian.org/debian/gzip
+cd gzip*
+mkdir build
+pushd build
+  ../configure --prefix=/usr \
+	       --host=x86_64-buildroot-linux-gnu \
+	       --silent
+  make --silent
+  make --silent DESTDIR=/opt/santroot install
+popd
+cd ..
+rm -rf gzip*
+# 12. make
+wget -q -O- https://alpha.gnu.org/gnu/make/make-4.4.0.91.tar.gz | tar -xzf-
+cd make*
+mkdir build
+pushd build
+  ../configure --prefix=/usr \
+	       --host=x86_64-buildroot-linux-gnu \
+	       --build=$(../build-aux/config.guess) \
+	       --silent
+  make --silent
+  make --silent DESTDIR=/opt/santroot install
+popd
+cd ..
+rm -rf make*
+# 13. patch
+wget -q -O- https://ftp.gnu.org/gnu/patch/patch-2.7.6.tar.xz | tar -xJf-
+cd patch
+mkdir build
+pushd build
+  ../configure --prefix=/usr   \
+               --host=x86_64-buildroot-linux-gnu \
+               --build=$(../build-aux/config.guess) \
+	       --silent
+  make --silent
+  make --silent DESTDIR=/opt/santroot install
+popd
+cd ..
+
+rm -rf patch*
 ls /opt/santroot
+pushd /opt/santroot
+  ln -s usr/bin bin
+  ln -s usr/bin sbin
+  ln -s usr/lib lib
+  ln -s usr/lib lib64
+  ln -s usr/lib libexec
+  ln -s bin usr/sbin
+popd
 chroot /opt/santroot
