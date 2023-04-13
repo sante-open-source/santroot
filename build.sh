@@ -233,7 +233,7 @@ pushd build
 	       --host=x86_64-buildroot-linux-gnu \
 	       --build=$(../build-aux/config.guess) \
 	       --silent
-  make --silent
+  make --silent CFLAGS="${CFLAGS} -Wno-error"
   make --silent DESTDIR=/opt/santroot install
 popd
 cd ..
