@@ -224,6 +224,7 @@ cd ..
 rm -rf sed*
 # 15. tar
 ln -s /usr/bin/aclocal /usr/bin/aclocal-1.15
+ln -s /usr/bin/automake /usr/bin/automake-1.15
 git clone https://salsa.debian.org/debian/tar
 cd tar
 mkdir build
