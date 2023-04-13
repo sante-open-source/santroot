@@ -223,6 +223,7 @@ popd
 cd ..
 rm -rf sed*
 # 15. tar
+alias aclocal-1.15=aclocal
 git clone https://salsa.debian.org/debian/tar
 cd tar
 mkdir build
