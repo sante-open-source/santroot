@@ -197,7 +197,7 @@ cd ..
 rm -rf make*
 # 13. patch
 wget -q -O- https://ftp.gnu.org/gnu/patch/patch-2.7.6.tar.xz | tar -xJf-
-cd patch
+cd patch*
 mkdir build
 pushd build
   ../configure --prefix=/usr   \
@@ -208,8 +208,34 @@ pushd build
   make --silent DESTDIR=/opt/santroot install
 popd
 cd ..
-
 rm -rf patch*
+# 14. sed
+git clone https://salsa.debian.org/debian/sed
+cd sed*
+mkdir build
+pushd build
+  ../configure --prefix=/usr \
+	       --host=x86_64-buildroot-linux-gnu \
+	       --silent
+  make --silent
+  make --silent DESTDIR=/opt/santroot install
+popd
+cd ..
+rm -rf sed*
+# 15. tar
+git clone https://salsa.debian.org/debian/tar
+cd tar
+mkdir build
+pushd build
+  ../configure --prefix=/usr \
+	       --host=x86_64-buildroot-linux-gnu \
+	       --build=$(../build-aux/config.guess) \
+	       --silent
+  make --silent
+  make --silent DESTDIR=/opt/santroot install
+popd
+cd ..
+rm -rf tar*
 ls /opt/santroot
 pushd /opt/santroot
   ln -s usr/bin bin
