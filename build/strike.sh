@@ -19,6 +19,8 @@ rm -rf binutils*
 
 git clone https://gcc.gnu.org/git/gcc
 cd gcc*
+sed -e '/m64=/s/lib64/lib/' -i.orig gcc/config/i386/t-linux64
+sed '/thread_header =/s/@.*@/gthr-posix.h/' -i libgcc/Makefile.in libstdc++-v3/include/Makefile.in
 ./contrib/download_prerequisites
 mkdir build
 pushd build
@@ -27,6 +29,8 @@ pushd build
 	       --target=x86_64-buildroot-linux-gnu \
 	       LDFLAGS_FOR_TARGET=-L$PWD/x86_64-buildroot-linux-gnu/libgcc \
 	       --prefix=/usr \
+	       --libdir=/usr/lib \
+	       --libexecdir=/usr/lib \
 	       --with-build-sysroot=/opt/x86-64--glibc--bleeding-edge-2022.08-1/x86_64-buildroot-linux-gnu/sysroot \
 	       --enable-default-pie \
 	       --enable-default-ssp \
