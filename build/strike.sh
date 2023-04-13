@@ -19,7 +19,7 @@ rm -rf binutils*
 
 git clone https://gcc.gnu.org/git/gcc
 cd gcc*
-./contrib/download_prequisites
+./contrib/download_prerequisites
 mkdir build
 pushd build
   ../configure --build=$(../config.guess) \
