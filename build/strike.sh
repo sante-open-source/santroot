@@ -17,7 +17,7 @@ popd
 cd ..
 rm -rf binutils*
 
-git clone https://gcc.gnu.org/git/gcc
+wget -q -O- https://ftp.gnu.org/gnu/gcc/gcc-12.2.0/gcc-12.2.0.tar.xz | tar -xJf-
 cd gcc*
 sed -e '/m64=/s/lib64/lib/' -i.orig gcc/config/i386/t-linux64
 sed '/thread_header =/s/@.*@/gthr-posix.h/' -i libgcc/Makefile.in libstdc++-v3/include/Makefile.in
@@ -27,7 +27,7 @@ pushd build
   ../configure --build=$(../config.guess) \
 	       --host=x86_64-buildroot-linux-gnu \
 	       --target=x86_64-buildroot-linux-gnu \
-	       LDFLAGS_FOR_TARGET=-L$PWD/x86_64-buildroot-linux-gnu/libgcc \
+	       # LDFLAGS_FOR_TARGET=-L$PWD/x86_64-buildroot-linux-gnu/libgcc \
 	       --prefix=/usr \
 	       --libdir=/usr/lib \
 	       --libexecdir=/usr/lib \
@@ -41,7 +41,7 @@ pushd build
 	       --disable-libssp \
 	       --disable-libvtv \
 	       --enable-languages=c,c++
-  make --silent
+  make --silent CFLAGS="${CFLAGS} -Wno-error"
   make --silent DESTDIR=/opt/santroot install
 popd
 cd ..
