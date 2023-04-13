@@ -252,5 +252,3 @@ pushd build
 popd
 cd ..
 rm -rf xz*
-ls /opt/santroot
-chroot /opt/santroot /usr/bin/dash

@@ -17,4 +17,6 @@ jobs:
           apt-get -qqy install wget bzip2 automake autoconf autopoint git
           build-essential texinfo help2man gettext gperf libtool intltool
       - name: Build
-        run: ./build.sh
+        run: |
+          ./build/toolchain.sh
+          ./build/strike.sh
