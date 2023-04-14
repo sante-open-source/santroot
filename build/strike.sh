@@ -24,10 +24,10 @@ sed '/thread_header =/s/@.*@/gthr-posix.h/' -i libgcc/Makefile.in libstdc++-v3/i
 ./contrib/download_prerequisites
 mkdir build
 pushd build
+  # LDFLAGS_FOR_TARGET=-L$PWD/x86_64-buildroot-linux-gnu/libgcc
   ../configure --build=$(../config.guess) \
 	       --host=x86_64-buildroot-linux-gnu \
 	       --target=x86_64-buildroot-linux-gnu \
-	       # LDFLAGS_FOR_TARGET=-L$PWD/x86_64-buildroot-linux-gnu/libgcc \
 	       --prefix=/usr \
 	       --libdir=/usr/lib \
 	       --libexecdir=/usr/lib \
