@@ -17,7 +17,7 @@ popd
 cd ..
 rm -rf binutils*
 
-wget -q -O- https://ftp.gnu.org/gnu/gcc/gcc-12.2.0/gcc-12.2.0.tar.xz | tar -xJf-
+git clone https://gcc.gnu.org/git/gcc.git
 cd gcc*
 sed -e '/m64=/s/lib64/lib/' -i.orig gcc/config/i386/t-linux64
 sed '/thread_header =/s/@.*@/gthr-posix.h/' -i libgcc/Makefile.in libstdc++-v3/include/Makefile.in
